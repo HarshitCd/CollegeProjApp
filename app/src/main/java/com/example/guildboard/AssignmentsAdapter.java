@@ -8,12 +8,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.RoomsViewHolder> {
 
     Context context;
-    String ass[], due[];
+    ArrayList<String> ass, due;
 
-    public AssignmentsAdapter(Context ct, String[] a, String[] d){
+    public AssignmentsAdapter(Context ct, ArrayList<String> a, ArrayList<String> d){
         context = ct;
         ass = a;
         due = d;
@@ -30,13 +32,19 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RoomsViewHolder holder, int position) {
-        holder.assignment.setText(ass[position]);
-        holder.duedate.setText(due[position]);
+        holder.assignment.setText(ass.get(position));
+        holder.duedate.setText(due.get(position));
+    }
+
+    public void notifyData(ArrayList<String> a, ArrayList<String> d) {
+        ass = a;
+        due = d;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return ass.length;
+        return ass.size();
     }
 
     public class RoomsViewHolder extends RecyclerView.ViewHolder {

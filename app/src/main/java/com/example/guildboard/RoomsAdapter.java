@@ -10,14 +10,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomsViewHolder> {
 
     Context context;
-    String rooms[], admins[];
+    ArrayList<String> rooms, admins;
 
-    public RoomsAdapter(Context ct, String[] r, String[] a){
+    public RoomsAdapter(Context ct, ArrayList<String> r, ArrayList<String> a){
         context = ct;
         rooms = r;
         admins = a;
@@ -34,13 +35,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomsViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RoomsViewHolder holder, final int position) {
-        holder.room.setText(rooms[position]);
-        holder.admin.setText(admins[position]);
+        holder.room.setText(rooms.get(position));
+        holder.admin.setText(admins.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Assignments.class);
-                intent.putExtra("roomName", rooms[position]);
+                intent.putExtra("roomName", rooms.get(position));
                 context.startActivity(intent);
             }
         });
@@ -48,7 +49,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.RoomsViewHol
 
     @Override
     public int getItemCount() {
-        return rooms.length;
+        return rooms.size();
+    }
+
+    public void notifyData(ArrayList<String> r, ArrayList<String> a) {
+        rooms = r;
+        admins = a;
+        notifyDataSetChanged();
     }
 
     public class RoomsViewHolder extends RecyclerView.ViewHolder {
