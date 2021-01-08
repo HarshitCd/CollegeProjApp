@@ -1,5 +1,6 @@
 package com.example.guildboard;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,17 @@ public class AssignmentsAdapter extends RecyclerView.Adapter<AssignmentsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RoomsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoomsViewHolder holder, final int position) {
         holder.assignment.setText(ass.get(position));
         holder.duedate.setText(due.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Status.class);
+                intent.putExtra("assName", ass.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     public void notifyData(ArrayList<String> a, ArrayList<String> d) {
